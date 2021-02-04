@@ -2,7 +2,7 @@ import {
   ApolloClient,
   InMemoryCache,
   ApolloProvider,
-  useQuery,
+  useQuery, 
   gql,
   useMutation,
 } from '@apollo/client';
@@ -37,8 +37,8 @@ const ChatRoot = () => {
         <input
           className='border border-gray-600 rounded-sm flex w-32'
           name='User'
-                  value={state.user}
-                  required
+          value={state.user}
+          required
           onChange={(e) => {
             setState({ ...state, user: e.target.value });
           }}
