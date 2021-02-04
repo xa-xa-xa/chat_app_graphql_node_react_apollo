@@ -2,13 +2,20 @@ import {
   ApolloClient,
   InMemoryCache,
   ApolloProvider,
-  useQuery, 
+  useSubscription, 
   gql,
   useMutation,
 } from '@apollo/client';
+import {WebSocketLink} from '@apollo/client/link/ws'
 import { useState } from 'react';
 
+const webSocketLink = new WebSocketLink({
+  uri: 'ws://localhost:4000',
+  options: { reconnect: true },
+});
+ 
 const client = new ApolloClient({
+  link: webSocketLink,
   uri: 'http://localhost:4000',
   cache: new InMemoryCache(),
 });
@@ -16,6 +23,7 @@ const client = new ApolloClient({
 const ChatRoot = () => {
   const [state, setState] = useState({ user: '', content: '' });
   const [postMessage, { data }] = useMutation(POST_MESSAGES);
+  console.log("DATA:", data)
 
   const onSend = () => {
     if (state.content.length) {
@@ -67,7 +75,7 @@ const ChatRoot = () => {
 
 // Query
 const GET_MESSAGES = gql`
-  query {
+  subscription {
     messages {
       id
       content
@@ -82,7 +90,7 @@ const POST_MESSAGES = gql`
 `;
 
 const Messages = ({ user }) => {
-  const { data } = useQuery(GET_MESSAGES, { pollInterval: 500 });
+  const { data } = useSubscription(GET_MESSAGES);
   if (!data) return <>loading...</>;
 
   return (
