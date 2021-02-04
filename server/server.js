@@ -37,7 +37,7 @@ const resolvers = {
         user,
         content,
       }); 
-      subscribers.forEach(fn => fn());
+      subscribers.forEach(fn => fn())
       return id;
     },
   },
