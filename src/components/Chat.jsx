@@ -1,11 +1,7 @@
-import {
-  ApolloClient,
-  InMemoryCache,
-  ApolloProvider,
-} from '@apollo/client';
+import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
 import { WebSocketLink } from '@apollo/client/link/ws';
 
-import ChatContainer from './ChatContainer'
+import ChatContainer from './ChatContainer';
 
 // Apollo
 const webSocketLink = new WebSocketLink({
@@ -20,10 +16,11 @@ const client = new ApolloClient({
 });
 
 const Chat = () => (
-  <ApolloProvider client={client}>
-    <ChatContainer />
-  </ApolloProvider>
+  <div className="focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent">
+    <ApolloProvider client={client}>
+      <ChatContainer />
+    </ApolloProvider>
+  </div>
 );
-
 
 export default Chat;
